@@ -58,7 +58,7 @@ public class RBTree {
             if (key == node.key) {
                 throw new IllegalStateException("Binary Search Tree already have an element with key " + key);
             }
-            parent = node.parent;
+            parent = node;
             node = key < node.key ? node.left : node.right;
         }
 

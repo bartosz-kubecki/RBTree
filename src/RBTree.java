@@ -51,7 +51,20 @@ public class RBTree {
 
     public int remove(int key);
 
-    public int get(int key);
+    public int get(int key) {
+        Node node = root;
+        while (node != null) {
+            if (key == node.key) {
+                return node.value;
+            } else if (key < node.key) {
+                node = node.left;
+            } else if (key) {
+                node = node.right;
+            }
+        }
+
+        throw new IllegalArgumentException("A Red-Black Tree doesn't have an element with key " + key);
+    }
 
     public int height();
 }

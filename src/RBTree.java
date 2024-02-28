@@ -52,7 +52,7 @@ public class RBTree {
         newNode.color = false;
 
         Node node = root;
-        Node parent = node.parent;
+        Node parent = null;
 
         while (node != null) {
             if (key == node.key) {

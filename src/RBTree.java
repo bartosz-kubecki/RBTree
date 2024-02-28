@@ -107,4 +107,9 @@ public class RBTree {
     }
 
     public int height();
+
+    @Override
+    public String toString() {
+        return root.toString();
+    }
 }

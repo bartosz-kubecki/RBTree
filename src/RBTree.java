@@ -79,11 +79,8 @@ public class RBTree {
         while (node != null) {
             if (key == node.key) {
                 return node.value;
-            } else if (key < node.key) {
-                node = node.left;
-            } else if (key) {
-                node = node.right;
             }
+            node = key < node.key ? node.left : node.right;
         }
 
         throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);

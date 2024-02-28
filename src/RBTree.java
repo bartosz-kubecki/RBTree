@@ -72,7 +72,27 @@ public class RBTree {
         }
     }
 
-    public int remove(int key);
+    public int remove(int key) {
+        Node node = root;
+        while (node != null && node.key != key) {
+            node = key < node.key ? node.left : node.right;
+        }
+
+        if (node == null) {
+            throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
+        }
+
+        if (node.left == null && node.right == null) {
+            if (node.parent == null) {
+                root = null;
+            } else if (node.parent.left == node) {
+                node.parent.left = null;
+            } else if (node.parent.right == node) {
+                node.parent.right = null;
+            }
+            return node.value;
+        }
+    }
 
     public int get(int key) {
         Node node = root;

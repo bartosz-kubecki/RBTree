@@ -47,7 +47,30 @@ public class RBTree {
         rightChild.parent = parent;
     }
 
-    public void add(int key, int value);
+    public void add(int key, int value) {
+        Node newNode = new Node(key, value);
+        newNode.color = false;
+
+        Node node = root;
+        Node parent = node.parent;
+
+        while (node != null) {
+            if (key == node.key) {
+                throw new IllegalStateException("Binary Search Tree already have an element with key " + key);
+            }
+            parent = node.parent;
+            node = key < node.key ? node.left : node.right;
+        }
+
+        newNode.parent = parent;
+        if (parent == null) {
+            root = newNode;
+        } else if (key < parent.key) {
+            parent.left = newNode;
+        } else {
+            parent.right = newNode;
+        }
+    }
 
     public int remove(int key);
 
@@ -63,7 +86,7 @@ public class RBTree {
             }
         }
 
-        throw new IllegalArgumentException("A Red-Black Tree doesn't have an element with key " + key);
+        throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
     }
 
     public int height();

@@ -92,6 +92,8 @@ public class RBTree {
             }
             return node.value;
         }
+
+        return 0; // TODO: Add removing nodes with children
     }
 
     public int get(int key) {
@@ -106,7 +108,19 @@ public class RBTree {
         throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
     }
 
-    public int height();
+    public int height() {
+        return height(root);
+    }
+    private int height(Node node) {
+        if (node == null) return 0;
+
+        int height = 1;
+
+        if (node.left != null) height += height(node.left);
+        if (node.right != null) height += height(node.right);
+
+        return height;
+    }
 
     @Override
     public String toString() {

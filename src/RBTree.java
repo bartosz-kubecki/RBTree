@@ -1,5 +1,7 @@
 public class RBTree {
     private Node root;
+    static final boolean RED = false;
+    static final boolean BLACK = true;
 
     private void rotateRight(Node node) {
         Node parent = node.parent;
@@ -49,7 +51,7 @@ public class RBTree {
 
     public void add(int key, int value) {
         Node newNode = new Node(key, value);
-        newNode.color = false;
+        newNode.color = RED;
 
         Node node = root;
         Node parent = null;

@@ -17,7 +17,7 @@ public class Node {
     public String toString() {
         return key + ": " +
                 value + " " +
-                (color ? "(RED)" : "(BLACK)") + "\n" +
+                (color ?  "(BLACK)" : "(RED)") + "\n" +
                 "Left: " + (left == null ? "null" : left.toString()) + "\n" +
                 "Right: " + (right == null ? "null" : right.toString());
     }

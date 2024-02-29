@@ -49,6 +49,37 @@ public class RBTree {
         rightChild.parent = parent;
     }
 
+    private void fixAfterAdd(Node node) {
+        Node parent = node.parent;
+
+        if (node == root) {
+            node.color = BLACK;
+            return;
+        }
+        if (parent.color == BLACK) return;
+
+        Node grandparent = parent.parent;
+        Node uncle = null;
+        if (grandparent.left == parent) uncle = grandparent.right;
+        else if (grandparent.right == parent) uncle = grandparent.left;
+        else throw new IllegalStateException("Parent is not a child of its parent.");
+
+        if (uncle.color == RED) {
+            parent.color = BLACK;
+            uncle.color = BLACK;
+            grandparent.color = RED;
+            fixAfterAdd(grandparent);
+        }
+
+        if (grandparent.right == parent) {
+            rotateLeft(parent);
+        }
+
+        parent.color = BLACK;
+        grandparent.color = RED;
+        rotateRight(grandparent);
+    }
+
     public void add(int key, int value) {
         Node newNode = new Node(key, value);
         newNode.color = RED;
@@ -72,6 +103,8 @@ public class RBTree {
         } else {
             parent.right = newNode;
         }
+
+        fixAfterAdd(newNode);
     }
 
     public int remove(int key) {

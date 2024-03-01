@@ -64,7 +64,7 @@ public class RBTree {
         else if (grandparent.right == parent) uncle = grandparent.left;
         else throw new IllegalStateException("Parent is not a child of its parent.");
 
-        if (uncle.color == RED) {
+        if (uncle != null & uncle.color == RED) {
             parent.color = BLACK;
             uncle.color = BLACK;
             grandparent.color = RED;

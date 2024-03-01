@@ -71,8 +71,14 @@ public class RBTree {
             fixAfterAdd(grandparent);
         }
 
-        if (grandparent.right == parent) {
-            rotateLeft(parent);
+        if (parent.left == node) {
+            if (grandparent.right == parent) {
+                rotateRight(parent);
+            }
+        } else {
+            if (grandparent.left == parent) {
+                rotateLeft(parent);
+            }
         }
 
         parent.color = BLACK;

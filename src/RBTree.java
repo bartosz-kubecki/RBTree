@@ -80,6 +80,9 @@ public class RBTree {
         rotateRight(grandparent);
     }
 
+    public void add(int key) {
+        add(key, 0);
+    }
     public void add(int key, int value) {
         Node newNode = new Node(key, value);
         newNode.color = RED;

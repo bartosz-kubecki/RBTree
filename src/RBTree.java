@@ -166,8 +166,33 @@ public class RBTree {
         return height;
     }
 
+    private void nodeToString(StringBuilder sb, String padding, String pointer, Node node) {
+        if (node == null) return;
+
+        sb.append(padding).append(pointer);
+        sb.append(node.color == RED ? "\u001B[41m\u001B[30m" : "\u001B[40m");
+        sb.append(String.format("%1$3s", node.key));
+        sb.append("\u001B[0m\n");
+
+        StringBuilder paddingBuilder = new StringBuilder();
+        paddingBuilder.append(padding);
+        if (node.parent != null) {
+            paddingBuilder.append(
+                    (node.parent.right != null && node.parent.right != node) ? "│   " : "    ");
+        }
+        String newPadding = paddingBuilder.toString();
+
+        String leftPointer = (node.right == null) ? "└──Left: " : "├──Left: ";
+        nodeToString(sb, newPadding, leftPointer, node.left);
+
+        String rightPointer = "└──Right:";
+        nodeToString(sb, newPadding, rightPointer, node.right);
+    }
+
     @Override
     public String toString() {
-        return root.toString();
+        StringBuilder sb = new StringBuilder();
+        nodeToString(sb, "", "Root: ", root);
+        return sb.toString();
     }
 }

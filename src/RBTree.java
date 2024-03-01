@@ -59,7 +59,7 @@ public class RBTree {
         if (parent.color == BLACK) return;
 
         Node grandparent = parent.parent;
-        Node uncle = null;
+        Node uncle;
         if (grandparent.left == parent) uncle = grandparent.right;
         else if (grandparent.right == parent) uncle = grandparent.left;
         else throw new IllegalStateException("Parent is not a child of its parent.");
@@ -69,21 +69,30 @@ public class RBTree {
             uncle.color = BLACK;
             grandparent.color = RED;
             fixAfterAdd(grandparent);
+            return;
         }
 
-        if (parent.left == node) {
-            if (grandparent.right == parent) {
-                rotateRight(parent);
-            }
-        } else {
-            if (grandparent.left == parent) {
+        if (parent == grandparent.left) {
+            if (node == parent.right) {
                 rotateLeft(parent);
+                node = parent;
+                parent = node.parent;
             }
-        }
 
-        parent.color = BLACK;
-        grandparent.color = RED;
-        rotateRight(grandparent);
+            parent.color = BLACK;
+            grandparent.color = RED;
+            rotateRight(grandparent);
+        } else {
+            if (node == parent.left) {
+                rotateRight(parent);
+                node = parent;
+                parent = node.parent;
+            }
+
+            parent.color = BLACK;
+            grandparent.color = RED;
+            rotateLeft(grandparent);
+        }
     }
 
     public void add(int key) {

@@ -166,13 +166,7 @@ public class RBTree {
     }
     private int height(Node node) {
         if (node == null) return 0;
-
-        int height = 1;
-
-        if (node.left != null) height += height(node.left);
-        if (node.right != null) height += height(node.right);
-
-        return height;
+        return (height(node.left) > height(node.right) ? height(node.left) : height(node.right)) + 1;
     }
 
     private void nodeToString(StringBuilder sb, String padding, String pointer, Node node) {

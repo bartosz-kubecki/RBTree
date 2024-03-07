@@ -210,7 +210,7 @@ public class RBTree {
     }
     private int height(Node node) {
         if (node == null) return 0;
-        return (height(node.left) > height(node.right) ? height(node.left) : height(node.right)) + 1;
+        return (Math.max(height(node.left), height(node.right))) + 1;
     }
 
     private void nodeToString(StringBuilder sb, String padding, String pointer, Node node) {

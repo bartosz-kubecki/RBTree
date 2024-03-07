@@ -125,6 +125,33 @@ public class RBTree {
         fixAfterAdd(newNode);
     }
 
+    private void fixAfterRemove(Node node){
+        if (node.color == RED) return;
+        if (node == root) return;
+
+        Node parent = node.parent;
+        if (node == parent.right) {
+            if (parent.left.color == RED) {
+                parent.left.color = BLACK;
+                parent.color = RED;
+
+                rotateRight(parent);
+            }
+
+        } else if (node == parent.left) {
+            if (parent.right.color == RED) {
+                parent.right.color = BLACK;
+                parent.color = RED;
+
+                rotateLeft(parent);
+            }
+        }
+
+        // TODO: When parents other child is black
+
+        System.out.println(node.key);
+    }
+
     public int remove(int key) {
         Node node = root;
         while (node != null && node.key != key) {
@@ -135,18 +162,35 @@ public class RBTree {
             throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
         }
 
-        if (node.left == null && node.right == null) {
-            if (node.parent == null) {
-                root = null;
-            } else if (node.parent.left == node) {
-                node.parent.left = null;
-            } else if (node.parent.right == node) {
-                node.parent.right = null;
+        Node child = null;
+        Node removedNode = node;
+
+        if (node.left == null ^ node.right == null) {
+            child = node.left == null ? node.right : node.left;
+        } else if (node.right != null) {
+            Node inOrderSuccessor = node.right;
+            while (inOrderSuccessor.left != null) {
+                inOrderSuccessor = inOrderSuccessor.left;
             }
-            return node.value;
+            remove(inOrderSuccessor.key);
+
+            node.key = inOrderSuccessor.key;
+            node.value = inOrderSuccessor.value;
+
+            removedNode = inOrderSuccessor;
         }
 
-        return 0; // TODO: Add removing nodes with children
+        if (node.parent == null) {
+            root = child;
+        } else if (node.parent.left == node && removedNode == node) {
+            node.parent.left = child;
+        } else if (node.parent.right == node && removedNode == node) {
+            node.parent.right = child;
+        }
+
+        fixAfterRemove(removedNode);
+
+        return removedNode.value;
     }
 
     public int get(int key) {

@@ -130,24 +130,40 @@ public class RBTree {
         if (node == root) return;
 
         Node parent = node.parent;
-        if (node == parent.right) {
+        if (node == parent.right && parent.left != null) {
             if (parent.left.color == RED) {
                 parent.left.color = BLACK;
                 parent.color = RED;
 
                 rotateRight(parent);
+            } else if ((parent.left.left == null || parent.left.left.color == BLACK) &&
+                       (parent.left.right == null || parent.left.right.color == BLACK)) {
+                parent.left.color = RED;
+
+                if (parent.color == RED) {
+                    parent.color = BLACK;
+                } else {
+                    fixAfterRemove(parent);
+                }
             }
 
-        } else if (node == parent.left) {
-            if (parent.right.color == RED) {
+        } else if (node == parent.left && parent.right != null) {
+            if (node.color == RED) {
                 parent.right.color = BLACK;
                 parent.color = RED;
 
                 rotateLeft(parent);
+            } else if ((parent.right.left != null && parent.right.left.color == BLACK) &&
+                    (parent.right.right != null && parent.right.right.color == BLACK)) {
+                parent.right.color = RED;
+
+                if (parent.color == RED) {
+                    parent.color = BLACK;
+                } else {
+                    fixAfterRemove(parent);
+                }
             }
         }
-
-        // TODO: When parents other child is black
 
         System.out.println(node.key);
     }

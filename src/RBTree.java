@@ -152,16 +152,7 @@ public class RBTree {
         System.out.println(node.key);
     }
 
-    public int remove(int key) {
-        Node node = root;
-        while (node != null && node.key != key) {
-            node = key < node.key ? node.left : node.right;
-        }
-
-        if (node == null) {
-            throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
-        }
-
+    private Node remove(Node node) {
         Node child = null;
         Node removedNode = node;
 
@@ -172,7 +163,7 @@ public class RBTree {
             while (inOrderSuccessor.left != null) {
                 inOrderSuccessor = inOrderSuccessor.left;
             }
-            remove(inOrderSuccessor.key);
+            remove(inOrderSuccessor);
 
             node.key = inOrderSuccessor.key;
             node.value = inOrderSuccessor.value;
@@ -180,29 +171,44 @@ public class RBTree {
             removedNode = inOrderSuccessor;
         }
 
-        if (node.parent == null) {
-            root = child;
-        } else if (node.parent.left == node && removedNode == node) {
-            node.parent.left = child;
-        } else if (node.parent.right == node && removedNode == node) {
-            node.parent.right = child;
-        }
-
         fixAfterRemove(removedNode);
 
-        return removedNode.value;
+        if (node.parent == null) {
+            root = child;
+        } else if (removedNode == node)  {
+            if (node.parent.left == node) node.parent.left = child;
+            if (node.parent.right == node) node.parent.right = child;
+        }
+
+        return removedNode;
+    }
+    public int remove(int key) {
+        Node node = root;
+        while (node != null && node.key != key) {
+            node = key < node.key ? node.left : node.right;
+        }
+
+        if (node == null) {
+            throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
+        }
+
+        return remove(node).key;
     }
 
-    public int get(int key) {
+    private Node getNode(int key) {
         Node node = root;
         while (node != null) {
             if (key == node.key) {
-                return node.value;
+                return node;
             }
             node = key < node.key ? node.left : node.right;
         }
 
         throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
+    }
+
+    public int get(int key) {
+        return getNode(key).value;
     }
 
     public int height() {

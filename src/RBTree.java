@@ -230,7 +230,7 @@ public class RBTree {
             throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
         }
 
-        return remove(node).key;
+        return remove(node).value;
     }
 
     private Node getNode(int key) {

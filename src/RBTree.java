@@ -145,16 +145,26 @@ public class RBTree {
                 } else {
                     fixAfterRemove(parent);
                 }
+            } else {
+                if (parent.left.left == null || parent.left.left.color == BLACK) {
+                    parent.left.right.color = BLACK;
+                    parent.left.color = RED;
+                    rotateLeft(parent.left);
+                }
+                parent.left.color = parent.color;
+                parent.color = BLACK;
+                parent.left.left.color = BLACK;
+                rotateRight(parent);
             }
 
         } else if (node == parent.left && parent.right != null) {
-            if (node.color == RED) {
+            if (parent.right.color == RED) {
                 parent.right.color = BLACK;
                 parent.color = RED;
 
                 rotateLeft(parent);
-            } else if ((parent.right.left != null && parent.right.left.color == BLACK) &&
-                    (parent.right.right != null && parent.right.right.color == BLACK)) {
+            } else if ((parent.right.left == null || parent.right.left.color == BLACK) &&
+                    (parent.right.right == null || parent.right.right.color == BLACK)) {
                 parent.right.color = RED;
 
                 if (parent.color == RED) {
@@ -162,6 +172,16 @@ public class RBTree {
                 } else {
                     fixAfterRemove(parent);
                 }
+            } else {
+                if (parent.right.right == null || parent.right.right.color == BLACK) {
+                    parent.right.left.color = BLACK;
+                    parent.right.color = RED;
+                    rotateRight(parent.right);
+                }
+                parent.right.color = parent.color;
+                parent.color = BLACK;
+                parent.right.right.color = BLACK;
+                rotateLeft(parent);
             }
         }
 

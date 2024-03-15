@@ -136,7 +136,8 @@ public class RBTree {
                 parent.color = RED;
 
                 rotateRight(parent);
-            } else if ((parent.left.left == null || parent.left.left.color == BLACK) &&
+            }
+            if ((parent.left.left == null || parent.left.left.color == BLACK) &&
                        (parent.left.right == null || parent.left.right.color == BLACK)) {
                 parent.left.color = RED;
 
@@ -163,7 +164,8 @@ public class RBTree {
                 parent.color = RED;
 
                 rotateLeft(parent);
-            } else if ((parent.right.left == null || parent.right.left.color == BLACK) &&
+            }
+            if ((parent.right.left == null || parent.right.left.color == BLACK) &&
                     (parent.right.right == null || parent.right.right.color == BLACK)) {
                 parent.right.color = RED;
 
@@ -184,8 +186,6 @@ public class RBTree {
                 rotateLeft(parent);
             }
         }
-
-        System.out.println(node.key);
     }
 
     private Node remove(Node node) {
@@ -213,7 +213,9 @@ public class RBTree {
             root = child;
         } else if (removedNode == node)  {
             if (node.parent.left == node) node.parent.left = child;
-            if (node.parent.right == node) node.parent.right = child;
+            else if (node.parent.right == node) node.parent.right = child;
+            else throw new IllegalStateException("Node is not a child of its parent.");
+            if (child != null) child.parent = node.parent;
         }
 
         return removedNode;

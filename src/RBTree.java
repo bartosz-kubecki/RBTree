@@ -209,10 +209,9 @@ public class RBTree {
 
         fixAfterRemove(removedNode);
 
-        if (node.parent == null) {
-            root = child;
-        } else if (removedNode == node)  {
-            if (node.parent.left == node) node.parent.left = child;
+        if (removedNode == node)  {
+            if (node.parent == null) root = child;
+            else if (node.parent.left == node) node.parent.left = child;
             else if (node.parent.right == node) node.parent.right = child;
             else throw new IllegalStateException("Node is not a child of its parent.");
             if (child != null) child.parent = node.parent;

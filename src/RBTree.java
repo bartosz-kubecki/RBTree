@@ -220,17 +220,9 @@ public class RBTree {
 
         return removedNode;
     }
+
     public int remove(int key) {
-        Node node = root;
-        while (node != null && node.key != key) {
-            node = key < node.key ? node.left : node.right;
-        }
-
-        if (node == null) {
-            throw new IllegalArgumentException("Binary Search Tree doesn't have an element with key " + key);
-        }
-
-        return remove(node).value;
+        return remove(getNode(key)).value;
     }
 
     private Node getNode(int key) {

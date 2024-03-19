@@ -226,7 +226,7 @@ public class RBTree {
      * Remove a node from the tree.
      * @param node {@code Node} to remove.
      */
-    private Node remove(Node node) {
+    private void remove(Node node) {
         Node child = null;
         Node removedNode = node;
 
@@ -254,8 +254,6 @@ public class RBTree {
             else throw new IllegalStateException("Node is not a child of its parent.");
             if (child != null) child.parent = node.parent;
         }
-
-        return removedNode;
     }
 
     /**
@@ -264,7 +262,9 @@ public class RBTree {
      * @return Value of the removed node.
      */
     public int remove(int key) {
-        return remove(getNode(key)).value;
+        Node node = getNode(key);
+        remove(node);
+        return node.value;
     }
 
     /**

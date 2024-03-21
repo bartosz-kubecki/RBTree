@@ -159,7 +159,7 @@ public class RBTree {
      * This method should be called before any changes to the structure of the tree are made.
      * @param node {@code Node} that is being removed.
      */
-    private void fixAfterRemove(Node node){
+    private void fixAfterRemove(Node node) {
         if (node.color == RED) return;
         if (node == root) return;
 

@@ -1,5 +1,5 @@
 /**
- * Represents a single node in a Red-black tree.
+ * A node in a Red-black tree.
  */
 public class Node {
     int key;
@@ -10,7 +10,7 @@ public class Node {
     Node parent;
 
     /**
-     * {@code true} represents black node, {@code false} red node.
+     * {@code True} for black node, {@code false} for red node.
      */
     boolean color;
 
